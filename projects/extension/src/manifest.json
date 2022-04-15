@@ -1,0 +1,38 @@
+{
+    "name": "Great Extension",
+    "version": "1.0",
+    "description": "Build an Extension with Angular",
+    "manifest_version": 2,
+    "permissions": [
+        "activeTab",
+        "webNavigation"
+    ],
+    "background": {
+        "scripts": [
+            "background.js",
+            "runtime.js"
+        ]
+    },
+    "externally_connectable": {
+        "matches": ["https://*.youtube.com/*"]
+      },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.youtube.com/*"
+            ],
+            "js": [
+                "content.js",
+                "runtime.js"
+            ]
+        }
+    ],
+    "page_action": {
+        "default_popup": "index.html"
+    },
+    "web_accessible_resources": [
+        "custom-elements.js",
+        "page.js",
+        "runtime.js"
+    ]
+}

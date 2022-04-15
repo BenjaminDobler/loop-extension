@@ -1,0 +1,80 @@
+:host {
+    display: block;
+    width: 100%;
+    background: transparent;
+    z-index: 3000;
+    color: var(--yt-spec-text-primary, #fff);
+    font-size: 16px;
+}
+
+.marker {
+    display: flex;
+    box-sizing: border-box;
+    border-bottom: 1px solid var(--yt-spec-10-percent-layer, #e6e6e6);
+    height: 22px;
+    line-height: 22px;
+}
+
+.loop {
+    display: flex;
+    box-sizing: border-box;
+    height: 22px;
+    line-height: 22px;
+    font-size: 12px;
+    border: 1px solid var(--yt-spec-10-percent-layer, #e6e6e6);
+
+
+
+    .loop-button {
+        border-left: 1px solid var(--yt-spec-10-percent-layer, #e6e6e6);
+
+    }
+
+    &.active {
+        .loop-button {
+            background: #EA3223;
+        }
+    }
+
+    input[type=text] {
+        border:0;
+        color: white;
+        background: transparent;
+        height: 22px;
+        line-height: 22px;
+      }
+}
+
+.headline {
+    margin: 0 0 4px 0;
+    display: block;
+    margin: 0 0 4px 0;
+    font-family: "Roboto", "Arial", sans-serif;
+    font-size: 1.4rem;
+    line-height: 2rem;
+    font-weight: 500;
+    max-height: 4rem;
+    overflow: hidden;
+    display: block;
+    -webkit-line-clamp: 2;
+    display: box;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    white-space: normal;
+}
+
+.loop-wrapper {
+    width: 100%;
+    display: flex;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+.loop-container {
+    padding-top: 11px;
+}
+
+.marker-container {
+    flex: 1;
+}

@@ -1,0 +1,59 @@
+:host {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2000;
+    // background: rgba(0, 0, 0, 0.5);
+    height: 20px;
+
+    --icon-color: #fff;
+}
+
+.timeline-container {
+    height: 5px;
+    background: rgba(255,255,255, 0.2);
+    position: absolute;
+    top: 10px;
+    left: 0px;
+    right: 0px;
+}
+
+.timeline-knob {
+    width: 10px;
+    height: 10px;
+    background: #ffffff;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.marker {
+    width: 1px;
+    height: 5px;
+    background: #fff;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.loop {
+    width: 10px;
+    height: 5px;
+    background: #EA3223;
+    position: absolute;
+    left: 0;
+    top: 0;
+    // &:nth-child(even) {
+    //     background-color: #888;
+    // }
+
+    &.active {
+        background: #449922;
+    }
+
+    &:hover {
+        background: #449922;
+    }
+}
