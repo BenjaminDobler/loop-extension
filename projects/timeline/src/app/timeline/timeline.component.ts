@@ -23,7 +23,7 @@ export class TimelineComponent {
 
   public containerWidth = 0;
 
-  constructor(private ref: ChangeDetectorRef) { }
+  constructor(private ref: ChangeDetectorRef, private el: ElementRef) { }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.loopservice) {
@@ -40,6 +40,27 @@ export class TimelineComponent {
   }
 
   ngAfterViewInit() {
+    const ro = new ResizeObserver( entries => {
+      for (let entry of entries) {
+        console.log('resize', entry);
+        const width = entry.contentRect.width;
+        this.containerWidth = width;
+        // const width = entry.contentBoxSize ? entry.contentBoxSize.inlineSize : entry.contentRect.width;
+       
+        // if (entry.target.tagName === 'H1') {
+        //   entry.target.textContent = width < 1000 ? '😱😱😱' : '😊😊😊';  
+        // }
+        
+        // if (entry.target.tagName === 'H2' && width < 500) {
+        //   entry.target.textContent = 'I won"t change anymore'; 
+        //   ro.unobserve(entry.target); // stop observing this element when it's size will reach 500px
+        // }
+      }
+    });
+    
+    // we can add more than one element to observe
+    ro.observe(this.timelineContainer.nativeElement);
+
     this.containerWidth = this.timelineContainer.nativeElement.getBoundingClientRect().width;
     window.addEventListener('resize', () => {
       this.containerWidth = this.timelineContainer.nativeElement.getBoundingClientRect().width;

@@ -31,7 +31,7 @@ export class LoopService {
     markers = new BehaviorSubject<Marker[]>([]);
     loops = new BehaviorSubject<Loop[]>([]);
 
-    history: {markers: Marker[], loops: Loop[]}[] = [];
+    history: { markers: Marker[], loops: Loop[] }[] = [];
 
     currentTime = new BehaviorSubject<number>(0);
     currentPercentage = new BehaviorSubject<number>(0);
@@ -48,6 +48,40 @@ export class LoopService {
 
     constructor() {
         this.restore();
+        this.watchLocation();
+    }
+
+    watchLocation() {
+        var oldHref = document.location.href;
+        let oldYoutubeId = getYoutubeId(document.location.href);
+
+        window.onload =  () => {
+            const bodyList = document.querySelector("body") as Node;
+
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (oldHref != document.location.href) {
+                        console.log('Location changed ', document.location.href);
+                        oldHref = document.location.href;
+                        /* Changed ! your code here */
+                        const youtubeID = getYoutubeId(document.location.href);
+                        if (youtubeID !== oldYoutubeId) {
+                            console.log('youtube id changed ', youtubeID);
+                            this.restore();
+                            oldYoutubeId = youtubeID;
+                        }
+                        console.log('youtube id ', youtubeID);
+                    }
+                });
+            });
+
+            var config = {
+                childList: true,
+                subtree: true
+            };
+
+            observer.observe(bodyList, config);
+        };
     }
 
     addMarkerAtCurrentTime() {
@@ -94,7 +128,7 @@ export class LoopService {
             const existingLoop = newLoops.find(l => l.start.id === previousMarker.id && l.end.id === nextMarker.id);
             if (existingLoop) {
                 existingLoop.end = newMarker;
-            } 
+            }
             newLoop = {
                 start: newMarker,
                 end: nextMarker,
@@ -110,7 +144,7 @@ export class LoopService {
 
         });
 
-        newMarkers = newMarkers.map((m,index)=>({...m, index})); 
+        newMarkers = newMarkers.map((m, index) => ({ ...m, index }));
         this.markers.next(newMarkers);
         this.loops.next(newLoops);
         this.store();
@@ -131,13 +165,13 @@ export class LoopService {
                 prevLoop.end = nextMarker;
             }
             markers = markers.filter(m => m !== marker);
-        } else if(nextMarker){
+        } else if (nextMarker) {
             const nextLoop = loops.find(l => l.start.id === marker.id);
             if (nextLoop) {
                 loops = loops.filter(l => l !== nextLoop);
             }
             markers = markers.filter(m => m !== marker);
-        } else if(previousMarker){
+        } else if (previousMarker) {
             const prevLoop = loops.find(l => l.end.id === marker.id);
             if (prevLoop) {
                 loops = loops.filter(l => l !== prevLoop);
@@ -283,6 +317,11 @@ export class LoopService {
             const parsed = JSON.parse(data);
             this.loops.next(parsed.loops);
             this.markers.next(parsed.markers);
+        } else {
+            console.log('set empty');
+            this.loops.next([]);
+            this.markers.next([]);
+            this.activeLoop = null;
         }
     }
 

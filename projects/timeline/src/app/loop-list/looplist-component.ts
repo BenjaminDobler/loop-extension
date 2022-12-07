@@ -62,8 +62,9 @@ export class LoopList {
         this.loopservice?.changeLoopPlaybackSpeed(loop, event.target.value);
     }
 
-    updateLoopName(loop: Loop, name: string ) {
-        console.log('update Loop name');
+    updateLoopName(loop: Loop, name: string, event: Event ) {
+        event.preventDefault();
+        event.stopPropagation();
         this.loopservice?.updateLoopName(loop, name);
     }
 
