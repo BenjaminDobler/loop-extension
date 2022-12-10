@@ -14,9 +14,11 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2020",
+    "target": "ES2022",
     "module": "es2020",
-    "types": ["chrome"],
+    "types": [
+      "chrome"
+    ],
     "lib": [
       "es2018",
       "dom"
@@ -27,8 +29,9 @@
       ],
       "@richapps/looper-components": [
         "./projects/timeline/src/public_api.ts"
-      ],
+      ]
     },
+    "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

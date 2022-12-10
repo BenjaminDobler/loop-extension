@@ -3,8 +3,9 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/app",
-    "types": ["chrome"],
-    "target": "es2020",
+    "types": [
+      "chrome"
+    ],
     "strictPropertyInitialization": false
   },
   "files": [
