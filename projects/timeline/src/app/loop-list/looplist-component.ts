@@ -51,7 +51,8 @@ export class LoopList {
     updateMarkerName(marker: Marker, e: any) {
         e.preventDefault();
         e.stopPropagation();
-        this.loopservice?.updateMarkerName(marker, e.target.value);
+        console.log('Update marker name ', e.target.value);
+        this.loopservice?.updateMarkerTime(marker, e.target.value);
     }
 
     removeMarker(marker: Marker) {
@@ -66,6 +67,10 @@ export class LoopList {
         event.preventDefault();
         event.stopPropagation();
         this.loopservice?.updateLoopName(loop, name);
+    }
+
+    identify(index:number, marker: Marker) {
+        return marker.id;
     }
 
 

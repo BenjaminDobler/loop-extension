@@ -1,31 +1,111 @@
 <span class="headline">Looper</span>
 <button (click)="addMarker()">Add Marker</button>
 
-
 <div class="loop-wrapper" *ngIf="loopservice">
-    <div class="marker-container">
-        <div class="marker" *ngFor="let marker of loopservice.markers | async">
-            <div (click)="goToPosition(marker)">
-                <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><path d="m.5 8.5 4-4-4-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(9 6)"/></svg>            
-            </div>
-            <div  (click)="removeMarker(marker)">
-                <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(3 2)"><path d="m2.5 2.5h10v12c0 1.1045695-.8954305 2-2 2h-6c-1.1045695 0-2-.8954305-2-2zm5-2c1.0543618 0 1.91816512.81587779 1.99451426 1.85073766l.00548574.14926234h-4c0-1.1045695.8954305-2 2-2z"/><path d="m.5 2.5h14"/><path d="m5.5 5.5v8"/><path d="m9.5 5.5v8"/></g></svg>
-            </div>
-            <div (click)="setMarkerToCurrentTime(marker)">
-                <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="8"/><circle cx="10.5" cy="10.5" r="2"/><circle cx="10.5" cy="10.5" r="5"/></g></svg>
-            </div>
+  <div class="marker-container">
+    <div class="marker" *ngFor="let marker of loopservice.markers | async;trackBy:identify">
+      <div (click)="goToPosition(marker)">
+        <svg
+          height="21"
+          viewBox="0 0 21 21"
+          width="21"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="m.5 8.5 4-4-4-4"
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            transform="translate(9 6)"
+          />
+        </svg>
+      </div>
+      <div (click)="removeMarker(marker)">
+        <svg
+          height="21"
+          viewBox="0 0 21 21"
+          width="21"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            fill="none"
+            fill-rule="evenodd"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            transform="translate(3 2)"
+          >
+            <path
+              d="m2.5 2.5h10v12c0 1.1045695-.8954305 2-2 2h-6c-1.1045695 0-2-.8954305-2-2zm5-2c1.0543618 0 1.91816512.81587779 1.99451426 1.85073766l.00548574.14926234h-4c0-1.1045695.8954305-2 2-2z"
+            />
+            <path d="m.5 2.5h14" />
+            <path d="m5.5 5.5v8" />
+            <path d="m9.5 5.5v8" />
+          </g>
+        </svg>
+      </div>
+      <div (click)="setMarkerToCurrentTime(marker)">
+        <svg
+          height="21"
+          viewBox="0 0 21 21"
+          width="21"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            fill="none"
+            fill-rule="evenodd"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="10.5" cy="10.5" r="8" />
+            <circle cx="10.5" cy="10.5" r="2" />
+            <circle cx="10.5" cy="10.5" r="5" />
+          </g>
+        </svg>
+      </div>
 
-            <div contenteditable style="margin-left: 10px;margin-right: 10px;flex-grow:1" (keyup)="updateMarkerName(marker, $event)" (keydown)="$event.stopPropagation();$event.preventDefault()"  >{{marker.time}}</div>
-        </div>
+      <input (blur)="updateMarkerName(marker, $event)" [value]="marker.time">
     </div>
-    <div class="loop-container">
-        <div class="loop" [class.active]="loop.active" *ngFor="let loop of loopservice.loops | async">
-            <input #name_tx placeholder="untitled" type="text" [value]="loop.name" (keyup)="updateLoopName(loop, name_tx.value, $event)" (keydown)="$event.stopPropagation()">
-            <div class="loop-button" (click)="startLoop(loop)">
-                <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(2 1)"><path d="m1.5 5.5c1.37786776-2.41169541 4.02354835-4 7-4 4.418278 0 8 3.581722 8 8m-1 4c-1.4081018 2.2866288-4.1175492 4-7 4-4.418278 0-8-3.581722-8-8"/><path d="m6.5 5.5h-5v-5"/><path d="m10.5 13.5h5v5"/></g></svg>
-            </div>
-        </div>
+  </div>
+  <div class="loop-container">
+    <div
+      class="loop"
+      [class.active]="loop.start.active"
+      *ngFor="let loop of loopservice.loops | async"
+    >
+      <input
+        #name_tx
+        placeholder="untitled"
+        type="text"
+        [value]="loop.start.name"
+        (keyup)="updateLoopName(loop, name_tx.value, $event)"
+        (keydown)="$event.stopPropagation()"
+      />
+      <div class="loop-button" (click)="startLoop(loop)">
+        <svg
+          height="21"
+          viewBox="0 0 21 21"
+          width="21"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            fill="none"
+            fill-rule="evenodd"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            transform="translate(2 1)"
+          >
+            <path
+              d="m1.5 5.5c1.37786776-2.41169541 4.02354835-4 7-4 4.418278 0 8 3.581722 8 8m-1 4c-1.4081018 2.2866288-4.1175492 4-7 4-4.418278 0-8-3.581722-8-8"
+            />
+            <path d="m6.5 5.5h-5v-5" />
+            <path d="m10.5 13.5h5v5" />
+          </g>
+        </svg>
+      </div>
     </div>
-
+  </div>
 </div>
-
