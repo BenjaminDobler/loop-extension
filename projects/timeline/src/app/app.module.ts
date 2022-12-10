@@ -9,17 +9,16 @@ import { TimelineComponent } from './timeline/timeline.component';
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    TimelineComponent,
-    LoopList,
-    DurationFormatPipe
-  ],
-  imports: [
-    BrowserModule
-  ],
-  providers: [],
-  entryComponents: [TimelineComponent, LoopList]
+    declarations: [
+        AppComponent,
+        TimelineComponent,
+        LoopList,
+        DurationFormatPipe
+    ],
+    imports: [
+        BrowserModule
+    ],
+    providers: []
 })
 export class AppModule { 
 
